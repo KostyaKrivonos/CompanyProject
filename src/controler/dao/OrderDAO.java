@@ -66,6 +66,7 @@ public class OrderDAO {
                 state3.setBoolean(4, orderItem.isPaid());
                 state3.addBatch();
             }
+            //Another way to write data to the database
 //            for (OrderItem orderItem : order.getOrderItems()) {
 //                state3.setInt(1, id);
 //                state3.setInt(2, orderItem.getProduct().getId());
@@ -99,21 +100,8 @@ public class OrderDAO {
     
     public ArrayList <Order> getOrdersByIdEmployee(Profile profile){
         ArrayList <Order> orders = new ArrayList<>();
-//        ArrayList <Customer> customers = new ArrayList<>();
         
-        try {
-//            Statement state = con.createStatement();
-//            ResultSet res = state.executeQuery(sqlSelectNameCustomers);
-//
-//            while (res.next()) {
-//                int id = res.getInt(1);
-//                String name = res.getString(2);
-//                String adress = res.getString(3);
-//                String phone = res.getString(4);
-//                Customer customer = new Customer(id, name, adress, phone);
-//                customers.add(customer);
-//            }
-                          
+        try {                         
             PreparedStatement state1 = con.prepareStatement(sqlSelectOrder);
             state1.setInt(1, profile.getId());
             
