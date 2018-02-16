@@ -10,14 +10,12 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Customer;
 import model.Order;
 import model.OrderItem;
-import model.Product;
 import model.Profile;
 
 /**
@@ -66,6 +64,8 @@ public class OrderDAO {
                 state3.setBoolean(4, orderItem.isPaid());
                 state3.addBatch();
             }
+            //Another way to write data to the database
+            
 //            for (OrderItem orderItem : order.getOrderItems()) {
 //                state3.setInt(1, id);
 //                state3.setInt(2, orderItem.getProduct().getId());
@@ -99,21 +99,8 @@ public class OrderDAO {
     
     public ArrayList <Order> getOrdersByIdEmployee(Profile profile){
         ArrayList <Order> orders = new ArrayList<>();
-//        ArrayList <Customer> customers = new ArrayList<>();
         
-        try {
-//            Statement state = con.createStatement();
-//            ResultSet res = state.executeQuery(sqlSelectNameCustomers);
-//
-//            while (res.next()) {
-//                int id = res.getInt(1);
-//                String name = res.getString(2);
-//                String adress = res.getString(3);
-//                String phone = res.getString(4);
-//                Customer customer = new Customer(id, name, adress, phone);
-//                customers.add(customer);
-//            }
-                          
+        try {                         
             PreparedStatement state1 = con.prepareStatement(sqlSelectOrder);
             state1.setInt(1, profile.getId());
             

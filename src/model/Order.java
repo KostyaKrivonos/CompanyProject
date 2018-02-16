@@ -70,17 +70,6 @@ public class Order {
     @Override
     public String toString() {
         return date + " " + id + " " + client.getName();
-    }
-
-    
-    
+    }  
 }
     
-//    public void removeOrderItem(OrderItem orderItem){
-//        
-//    }
-//    
-//    public double totalPrice(){
-//        
-//    }
-//}

@@ -18,20 +18,20 @@ public class DAOFactory {
     private Connection con = null;
 
     private DAOFactory() throws SQLException {
-        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/company", "root", "1584");    
+        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/company", "root", "1584");
         con.setAutoCommit(false);
     }
-   
-    private Connection getConnection() throws SQLException{
-        if(con == null){
+
+    private Connection getConnection() throws SQLException {
+        if (con == null) {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/company", "root", "1584");
             con.setAutoCommit(false);
         }
         return con;
     }
-    
-    public static DAOFactory getDAOFactory() throws SQLException{
-        if(factory == null){
+
+    public static DAOFactory getDAOFactory() throws SQLException {
+        if (factory == null) {
             factory = new DAOFactory();
         }
         return factory;

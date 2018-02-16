@@ -27,12 +27,13 @@ public class AdminWindow extends javax.swing.JFrame {
         Dimension d = tool.getScreenSize();
         this.setBounds(0, 0, d.width, d.height);
         
-        ActionListener addEmployeeListener = new AddEmployeeListener();
-        ActionListener showEmployeeListener = new ShowEmployeeListener();
+        ActionListener addEmployeeListener = new AddEmployeeListener();        
         jMenuItem3.addActionListener(addEmployeeListener);
         jButton1.addActionListener(addEmployeeListener);
+        ActionListener showEmployeeListener = new ShowEmployeeListener();
         jMenuItem4.addActionListener(showEmployeeListener);
         jButton2.addActionListener(showEmployeeListener);
+        
         jButton3.addActionListener((ActionEvent s) -> {
             if (StatisticsWindow.getCount() == 0) {
                 StatisticsWindow statisticsWindowInternalFrame = new StatisticsWindow();

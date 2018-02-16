@@ -22,7 +22,6 @@ public class EmployeeController {
 
     public EmployeeController() throws SQLException {
         employeeDAO = DAOFactory.getDAOFactory().getEmployeeDAO();
-        //employeeDAO = DAOFactory.getEmployeeDAO();
     }
     
     public ArrayList <Profile> getAllEmployees() throws SQLException{

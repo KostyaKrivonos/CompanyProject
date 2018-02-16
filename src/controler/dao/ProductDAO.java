@@ -84,16 +84,6 @@ public class ProductDAO {
                 return false;
             }
             
-//            PreparedStatement state2 = con.prepareStatement(sqlDeleteIdProductFromOrderDetails);
-//            state2.setInt(1, order.getId());
-//            state2.setInt(2, product.getId());
-//
-//            int count1 = state2.executeUpdate();
-//            if (count1 == 0) {
-//                con.rollback();
-//                return false;
-//            }
-            
             con.commit();
             return true;
             

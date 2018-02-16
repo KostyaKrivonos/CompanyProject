@@ -109,7 +109,6 @@ public class EmployeeDAO {
         try {
             PreparedStatement state1 = con.prepareStatement(sqlDeleteProfileFromStaffdetails);
             state1.setInt(1, profile.getId());
-//            state1.executeUpdate();
             
             int count = state1.executeUpdate();
             if(count == 0){
