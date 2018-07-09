@@ -5,12 +5,15 @@
  */
 package controler;
 
-import controler.dao.DAOFactory;
-import controler.dao.EmployeeDAO;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Profile;
+import newcontroller.storage.database.api.*;
+import newcontroller.storage.database.implementation.*;
 import view.transferObjects.TransferObjectTestProfile;
 
 /**
@@ -18,29 +21,53 @@ import view.transferObjects.TransferObjectTestProfile;
  * @author Алёшечка
  */
 public class EmployeeController {
-    private EmployeeDAO employeeDAO;
+    private DAOFactory factory;
 
     public EmployeeController() throws SQLException {
-        employeeDAO = DAOFactory.getDAOFactory().getEmployeeDAO();
+        this.factory = DAOFactory.getDAOFactory(FactoryType.RELATION);
     }
     
-    public ArrayList <Profile> getAllEmployees() throws SQLException{
-        ArrayList <Profile> employees = employeeDAO.getAllEmployees();
+    public Collection<Profile> getAllEmployees() throws SQLException {
+        ArrayList<Profile> employees = new ArrayList<>();
+        try {
+            DAO<Profile, Integer> dao = factory.getDAO(Profile.class, Integer.class);
+            return dao.findAll();
+        } catch (InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(EmployeeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return employees;
     }
     
-    public boolean createProfile(TransferObjectTestProfile t) throws SQLException{
-         //логіка додатвкової перевірки даних для створення Profile.
-        Profile profile = new Profile(t.getName(), t.getLastName(), t.getNickName(),
+    public Profile createProfile(TransferObjectTestProfile t) throws SQLException{
+        try {
+            //логіка додатвкової перевірки даних для створення Profile.
+            Profile profile = new Profile(t.getName(), t.getLastName(), t.getNickName(),
                     t.getPassword(), t.getRole().getIdRole(), t.getRole().getRole());
-        return employeeDAO.createProfile(profile);
+            DAO<Profile, Integer> dao = factory.getDAO(Profile.class, Integer.class);
+            return dao.create(profile);
+        } catch (InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(EmployeeController.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
     
-    public boolean deleteProfile(Profile profile){
-        return employeeDAO.deleteProfile(profile);
+    public Profile deleteProfile(Profile profile) {
+        try {
+            DAO<Profile, Integer> dao = factory.getDAO(Profile.class, Integer.class);
+            return dao.delete(profile);
+        } catch (InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(EmployeeController.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
     
     public Map <Profile, Integer> getEmployeesName() throws SQLException{
-         return employeeDAO.getEmployeesStatistics();        
+        try {
+            RelEmployeeDAO dao = (RelEmployeeDAO) factory.getDAO(Profile.class, Integer.class);
+            return dao.getEmployeesStatistics();
+        } catch (InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(EmployeeController.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
 }

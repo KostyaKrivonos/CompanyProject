@@ -142,11 +142,8 @@ public class AddCustomer extends javax.swing.JInternalFrame {
                 && !jTextField4.getText().equals("")){
             TransferObjectCustomer transferObject = new TransferObjectCustomer(jTextField1.getText(), 
                     jTextField4.getText(), jTextField3.getText());
-            if(customerControler.createCustomer(transferObject))
+            if(customerControler.createCustomer(transferObject) != null);
                 this.dispose();
-            else{
-                
-            }
         }
         else{
             jLabel4.setVisible(true);

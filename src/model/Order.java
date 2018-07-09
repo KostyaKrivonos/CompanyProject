@@ -3,9 +3,6 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -30,10 +27,7 @@ public class Order {
         this.client = client;
         this.date = date;
         this.manager = profile;        
-        this.orderItems = itemList;
-//        this.looked = false;
-//        this.readOnly = false;
-//        this.finished = false;        
+        this.orderItems = itemList;       
     }
 
     public Order(int id, Customer client, Profile profile, Date date) {

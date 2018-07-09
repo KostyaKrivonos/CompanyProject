@@ -35,7 +35,7 @@ public class ShowCustomer extends javax.swing.JInternalFrame {
             customerControler = new CustomerController();
             this.customers1 = customerControler.getCustomersLimit(counterPage, 2);
             
-            this.customers = customerControler.getAllCustomers();
+            this.customers = (ArrayList<Customer>) customerControler.getAllCustomers();
             //lambda
             this.customers.forEach((Customer customer) -> jComboBox1.addItem(customer));            
 //          simple code
@@ -320,15 +320,20 @@ public class ShowCustomer extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jComboBox1ItemStateChanged
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Customer customer = (Customer) jComboBox1.getSelectedItem();
-        boolean res = customerControler.deleteCustomer(customer);
-        if(!res)
-            JOptionPane.showMessageDialog(this, "Проблема з видаленям.", 
-                    "Проблема з видаленям.", JOptionPane.ERROR_MESSAGE);
-        else{
-           jComboBox1.removeItem(customer);
-           jComboBox1.revalidate();
-        }
+        
+        //runnable.run();
+        new Thread(() -> {
+            Customer customer = (Customer) jComboBox1.getSelectedItem();
+            Customer res = customerControler.deleteCustomer(customer);
+            if (res == null) {
+                JOptionPane.showMessageDialog(this, "Проблема з видаленям.",
+                        "Проблема з видаленям.", JOptionPane.ERROR_MESSAGE);
+            } else {
+                jComboBox1.removeItem(customer);
+                jComboBox1.revalidate();
+            }
+        }).start();
+        //t1.start();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void formInternalFrameClosing(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosing

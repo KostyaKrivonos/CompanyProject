@@ -5,11 +5,14 @@
  */
 package controler;
 
-import controler.dao.CustomerDAO;
-import controler.dao.DAOFactory;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Customer;
+import newcontroller.storage.database.api.*;
+import newcontroller.storage.database.implementation.*;
 import view.transferObjects.TransferObjectCustomer;
 
 /**
@@ -17,28 +20,51 @@ import view.transferObjects.TransferObjectCustomer;
  * @author Алёшечка
  */
 public class CustomerController {
-    private CustomerDAO customerDAO;
+    private DAOFactory factory;
 
     public CustomerController() throws SQLException {
-        this.customerDAO = DAOFactory.getDAOFactory().getCustomerDAO();
+        this.factory = DAOFactory.getDAOFactory(FactoryType.RELATION);
     }
-
     
-    public ArrayList <Customer> getAllCustomers() throws SQLException{
-        ArrayList <Customer> customers = customerDAO.getAllCustomers();
+    public Collection <Customer> getAllCustomers() {
+        ArrayList <Customer> customers = new ArrayList<>();
+        try {
+            DAO<Customer,Integer> dao = factory.getDAO(Customer.class, Integer.class);
+            return dao.findAll();
+        } catch (InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(CustomerController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return customers;
     }
     
-    public boolean createCustomer(TransferObjectCustomer t){
-        Customer customer = new Customer(t.getName(), t.getAdress(), t.getPhone());
-        return customerDAO.createCustomer(customer);
+    public Customer createCustomer(TransferObjectCustomer t){
+        try {
+            Customer customer = new Customer(t.getName(), t.getAdress(), t.getPhone());
+            DAO<Customer,Integer> dao = factory.getDAO(Customer.class, Integer.class);
+            return dao.create(customer);
+        } catch (InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(CustomerController.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }       
     }
     
-    public boolean deleteCustomer(Customer customer){
-        return customerDAO.deleteCustomer(customer);
+    public Customer deleteCustomer(Customer customer) {
+        try {
+            DAO<Customer, Integer> dao = factory.getDAO(Customer.class, Integer.class);
+            return dao.delete(customer);
+        } catch (InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(CustomerController.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }        
     }
     
-     public ArrayList<Customer> getCustomersLimit(int startIndex, int countRow){
-         return customerDAO.getCustomersLimit(startIndex, countRow);
-     }
+    public ArrayList<Customer> getCustomersLimit(int startIndex, int countRow){              
+        try {
+            RelCustomerDAO dao = (RelCustomerDAO)factory.getDAO(Customer.class, Integer.class);
+            return dao.getCustomersLimit(startIndex, countRow);
+        } catch (InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(CustomerController.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }        
+    }        
 }

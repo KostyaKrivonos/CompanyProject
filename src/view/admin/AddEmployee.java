@@ -6,7 +6,7 @@
 package view.admin;
 
 import controler.EmployeeController;
-import controler.dao.DAOFactory;
+import controler.dao_old_version_.DAOFactory1;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -31,7 +31,7 @@ public class AddEmployee extends javax.swing.JInternalFrame {
             initComponents();
             employeeControler = new EmployeeController();
             jLabel7.setVisible(false);
-            ArrayList <Role> roles = DAOFactory.getDAOFactory().getRoleDAO().getRoles();
+            ArrayList <Role> roles = DAOFactory1.getDAOFactory().getRoleDAO().getRoles();
             for(Role role: roles){
                 jComboBox1.addItem(role);
             }
@@ -210,7 +210,7 @@ public class AddEmployee extends javax.swing.JInternalFrame {
                 jTextField2.getText(), jTextField3.getText(), new String(jPasswordField1.getPassword()), 
                     (Role)jComboBox1.getSelectedItem());
             try {
-                if(employeeControler.createProfile(transferObject))
+                if(employeeControler.createProfile(transferObject) != null)
                     //успішно
                     this.dispose();
                 else{

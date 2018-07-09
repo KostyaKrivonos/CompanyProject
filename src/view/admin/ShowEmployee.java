@@ -26,7 +26,7 @@ public class ShowEmployee extends javax.swing.JInternalFrame {
             count++;
             initComponents();
             employeeControler = new EmployeeController();
-            ArrayList <Profile> employees = employeeControler.getAllEmployees();
+            ArrayList <Profile> employees = (ArrayList <Profile>)employeeControler.getAllEmployees();
             //lambda
             employees.forEach((Profile profile) -> jComboBox1.addItem(profile));
             
@@ -213,8 +213,8 @@ public class ShowEmployee extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         Profile profile = (Profile) jComboBox1.getSelectedItem();
-        boolean res = employeeControler.deleteProfile(profile);
-        if (!res) {
+        
+        if (employeeControler.deleteProfile(profile) == null) {
             JOptionPane.showMessageDialog(this, "Проблема з видаленям.",
                     "Проблема з видаленям.", JOptionPane.ERROR_MESSAGE);
         } else {

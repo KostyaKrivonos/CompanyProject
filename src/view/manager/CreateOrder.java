@@ -48,13 +48,13 @@ public class CreateOrder extends javax.swing.JInternalFrame {
             this.customerControler = new CustomerController();
             this.orderControler = new OrderController();
             this.jDesktop = jDesktopPane;
-            ArrayList <Customer> customers = customerControler.getAllCustomers();
+            ArrayList <Customer> customers = (ArrayList <Customer>) customerControler.getAllCustomers();
             customers.stream().forEach((customer) -> {
                 jComboBox1.addItem(customer);
             });
             
             this.productControler = new ProductController();
-            ArrayList <Product> products = productControler.getAllProducts();
+            ArrayList <Product> products = (ArrayList <Product>)productControler.getAllProducts();
             products.stream().forEach((product) -> {
                 jComboBox3.addItem(product);
             });
@@ -473,7 +473,7 @@ public class CreateOrder extends javax.swing.JInternalFrame {
         if (jComboBox1.getSelectedIndex() != -1 && orderItemList.size() != 0) {
             TransferObjectOrder orderObject = new TransferObjectOrder((Customer) jComboBox1.getSelectedItem(),
                     profile, orderItemList, jXDatePicker1.getDate());
-            if (orderControler.createOrder(orderObject)) {
+            if (orderControler.createOrder(orderObject) != null) {
                 JOptionPane.showMessageDialog(this, "Ордер створено успішно.");
             } else {
                 JOptionPane.showMessageDialog(this, "Проблеми з створеням ордеру.", "Error", JOptionPane.ERROR_MESSAGE);

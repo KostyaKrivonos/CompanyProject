@@ -5,11 +5,14 @@
  */
 package controler;
 
-import controler.dao.DAOFactory;
-import controler.dao.ProductDAO;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Product;
+import newcontroller.storage.database.api.*;
+import newcontroller.storage.database.implementation.*;
 import view.transferObjects.TransferObjectProduct;
 
 /**
@@ -17,39 +20,80 @@ import view.transferObjects.TransferObjectProduct;
  * @author Алёшечка
  */
 public class ProductController {
-    private ProductDAO productDAO;
+    private DAOFactory factory;
 
     public ProductController() throws SQLException {
-        this.productDAO = DAOFactory.getDAOFactory().getProductDAO();
+        this.factory = DAOFactory.getDAOFactory(FactoryType.RELATION);
     }
     
-    public ArrayList <Product> getAllProducts() throws SQLException{
-        ArrayList <Product> products = productDAO.getAllProducts();
-        return products;
+    public Collection <Product> getAllProducts() throws SQLException{
+        try {        
+            DAO<Product,Integer> dao = factory.getDAO(Product.class, Integer.class);
+            return dao.findAll();
+        } catch (InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(ProductController.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
     
-    public ArrayList<Product> getProductsLimit(int startIndex, int countRow){
-        return productDAO.getProductsLimit(startIndex, countRow);
+    public ArrayList<Product> getProductsLimit(int startIndex, int countRow) {
+        try {
+            RelProductDAO dao = (RelProductDAO) factory.getDAO(Product.class, Integer.class);
+            return dao.getProductsLimit(startIndex, countRow);
+        } catch (InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(ProductController.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
     
-    public boolean createProduct(TransferObjectProduct t){
-        Product product = new Product(t.getName(), t.getPrice());
-        return productDAO.createProduct(product);
+    public Product createProduct(TransferObjectProduct t) {
+        try {
+            Product product = new Product(t.getName(), t.getPrice());
+            DAO<Product, Integer> dao = factory.getDAO(Product.class, Integer.class);
+            return dao.create(product);
+        } catch (InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(ProductController.class.getName()).log(Level.SEVERE, null, ex);
+            return  null;
+        }
     }
     
-    public boolean deleteProduct(Product product){
-        return productDAO.deleteProduct(product);
+    public Product deleteProduct(Product product) {
+        try {
+            DAO<Product, Integer> dao = factory.getDAO(Product.class, Integer.class);
+            return dao.delete(product);
+        } catch (InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(ProductController.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
     
-    public boolean updateProductNamePrice(Product product) {
-        return productDAO.updateProductNamePrice(product);
+    public Product updateProductNamePrice(Product product) {
+        try {
+            DAO<Product,Integer> dao = factory.getDAO(Product.class, Integer.class);
+            return dao.update(product);
+        } catch (InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(ProductController.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
 
-    public boolean updateProductName(Product product) {
-        return productDAO.updateProductName(product);
+    public Product updateProductName(Product product) {
+        try {
+            RelProductDAO dao = (RelProductDAO)factory.getDAO(Product.class, Integer.class);
+            return dao.updateProductName(product);
+        } catch (InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(ProductController.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
 
-    public boolean updateProductPrice(Product product) {
-        return productDAO.updateProductPrice(product);
+    public Product updateProductPrice(Product product) {
+        try {
+            RelProductDAO dao = (RelProductDAO) factory.getDAO(Product.class, Integer.class);
+            return dao.updateProductPrice(product);
+        } catch (InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(ProductController.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
 }

@@ -139,7 +139,7 @@ public class AddProduct extends javax.swing.JInternalFrame {
         if(!jTextField1.getText().equals("") && !jTextField2.getText().equals("")){
             TransferObjectProduct transferObject = new TransferObjectProduct(jTextField1.getText(), 
                     Double.parseDouble(jTextField2.getText()));
-            if (productControler.createProduct(transferObject)) {
+            if (productControler.createProduct(transferObject) != null) {
                 if (productWindow != null) {
                     productWindow.refresh();
                 }

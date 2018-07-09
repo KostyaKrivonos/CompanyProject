@@ -356,10 +356,9 @@ public class ProductWindow extends javax.swing.JInternalFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         int indexRow = this.jTable1.getSelectedRow();
         Product product = productsList.get(indexRow);
-        boolean res = productControler.deleteProduct(product);
         productsList.remove(indexRow);
         tableModel.fireTableDataChanged();
-        if (!res) {
+        if (productControler.deleteProduct(product) == null) {
             JOptionPane.showMessageDialog(this, "Проблема з видаленям.",
                     "Проблема з видаленям.", JOptionPane.ERROR_MESSAGE);
         }

@@ -5,12 +5,14 @@
  */
 package controler;
 
-import controler.dao.DAOFactory;
-import controler.dao.OrderDAO;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Order;
 import model.Profile;
+import newcontroller.storage.database.api.*;
+import newcontroller.storage.database.implementation.*;
 import view.transferObjects.TransferObjectOrder;
 
 /**
@@ -18,21 +20,31 @@ import view.transferObjects.TransferObjectOrder;
  * @author Алёшечка
  */
 public class OrderController {
-    private OrderDAO orderDAO;
+    private DAOFactory factory;
 
     public OrderController() throws SQLException {
-        this.orderDAO = DAOFactory.getDAOFactory().getOrderDAO();
+        this.factory = DAOFactory.getDAOFactory(FactoryType.RELATION);
     }
     
-    public boolean createOrder(TransferObjectOrder t){
-        //можуть відбуватись додаткові перевірки данних переданих з view 
-        Order order1 = new Order(t.getCustomer(), t.getProfile(), t.getItemList(), t.getDate());        
-        // додаткова бізнес логіка (відправка sms, Email тощо.)
-        return orderDAO.createOrder(order1);
-        
+    public Order createOrder(TransferObjectOrder t){
+        try {
+            //можуть відбуватись додаткові перевірки данних переданих з view
+            Order order1 = new Order(t.getCustomer(), t.getProfile(), t.getItemList(), t.getDate());
+            // додаткова бізнес логіка (відправка sms, Email тощо.)
+            DAO<Order,Integer> dao = factory.getDAO(Order.class, Integer.class);
+            return dao.create(order1);
+        } catch (InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(OrderController.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }       
     }
     public ArrayList <Order> getOrdersByIdEmployee(Profile profile){
-        return orderDAO.getOrdersByIdEmployee(profile);
-    }
-    
+        try {
+            RelOrderDAO dao = (RelOrderDAO)factory.getDAO(Order.class, Integer.class);
+            return dao.getOrdersByIdEmployee(profile);
+        } catch (InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(OrderController.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }   
 }
