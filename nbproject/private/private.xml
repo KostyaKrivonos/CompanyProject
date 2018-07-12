@@ -3,7 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Алёшечка/Documents/NetBeansProjects/CompanyProject/src/controler/dao/ProductDAO.java</file>
+            <file>file:/C:/Users/Алёшечка/Documents/NetBeansProjects/CompanyProject/src/view/LoginView1.java</file>
+            <file>file:/C:/Users/Алёшечка/Documents/NetBeansProjects/CompanyProject/src/controler/LoginController.java</file>
+            <file>file:/C:/Users/Алёшечка/Documents/NetBeansProjects/CompanyProject/src/view/admin/ShowEmployee.java</file>
+            <file>file:/C:/Users/Алёшечка/Documents/NetBeansProjects/CompanyProject/src/view/admin/AddEmployee.java</file>
+            <file>file:/C:/Users/Алёшечка/Documents/NetBeansProjects/CompanyProject/src/view/admin/AdminWindow.java</file>
+            <file>file:/C:/Users/Алёшечка/Documents/NetBeansProjects/CompanyProject/src/controler/EmployeeController.java</file>
         </group>
     </open-files>
 </project-private>

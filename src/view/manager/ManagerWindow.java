@@ -36,12 +36,11 @@ public class ManagerWindow extends javax.swing.JFrame {
                 createOrderInternalFrame.setVisible(true);
             }
         };
-        jButton1.addActionListener(newCreatOrderListener);
-        jMenuItem1.addActionListener(newCreatOrderListener);
+        new Thread(() -> {
+            jButton1.addActionListener(newCreatOrderListener);
+            jMenuItem1.addActionListener(newCreatOrderListener);
+        }).start();
         
-//        ActionListener createOrderListener = new CreateOrderListener();
-//        jButton1.addActionListener(createOrderListener);
-//        jMenuItem1.addActionListener(createOrderListener);
 
         ActionListener addCustomerListener = new AddCustomerListener();
         jButton2.addActionListener(addCustomerListener);

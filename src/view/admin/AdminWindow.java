@@ -9,6 +9,8 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Profile;
 
 /**
@@ -43,8 +45,6 @@ public class AdminWindow extends javax.swing.JFrame {
             }
         });
     }
-    
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -119,17 +119,20 @@ public class AdminWindow extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    
-   
+
     private class AddEmployeeListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
             if (AddEmployee.getCount() == 0) {
-                AddEmployee addEmployeeInternalFrame = new AddEmployee();
-                addEmployeeInternalFrame.setBounds(50, 50, 400, 300);
-                jDesktopPane1.add(addEmployeeInternalFrame);
-                addEmployeeInternalFrame.setVisible(true);
+                try {
+                    AddEmployee addEmployeeInternalFrame = new AddEmployee();
+                    addEmployeeInternalFrame.setBounds(50, 50, 400, 300);
+                    jDesktopPane1.add(addEmployeeInternalFrame);
+                    addEmployeeInternalFrame.setVisible(true);
+                } catch (InstantiationException | IllegalAccessException ex) {
+                    Logger.getLogger(AdminWindow.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }

@@ -17,6 +17,9 @@ public class OrderItem {
     private double quantity;
     private boolean paid;
 
+    public OrderItem() {
+    }
+
     public OrderItem(Product goods, double quantity, boolean paid) {
         this.product = goods;
         this.quantity = quantity;

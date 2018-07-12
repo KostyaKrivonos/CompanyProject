@@ -21,7 +21,8 @@ public class Order {
     private Customer client;
     private Profile manager;
 
-    
+    public Order() {
+    }
 
     public Order(Customer client, Profile profile, ArrayList<OrderItem> itemList, Date date) {
         this.client = client;

@@ -12,7 +12,11 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import model.Customer;
 import model.Role;
+import newcontroller.storage.database.api.DAO;
+import newcontroller.storage.database.api.DAOFactory;
+import newcontroller.storage.database.implementation.FactoryType;
 import view.transferObjects.TransferObjectTestProfile;
 
 /**
@@ -25,13 +29,17 @@ public class AddEmployee extends javax.swing.JInternalFrame {
     /**
      * Creates new form AddEmployee
      */
-    public AddEmployee() {
+    public AddEmployee() throws InstantiationException, IllegalAccessException {
         try {
             count++;
             initComponents();
             employeeControler = new EmployeeController();
             jLabel7.setVisible(false);
-            ArrayList <Role> roles = DAOFactory1.getDAOFactory().getRoleDAO().getRoles();
+            
+            DAOFactory factory = DAOFactory.getDAOFactory(FactoryType.RELATION);
+            DAO<Role, Integer> dao = factory.getDAO(Role.class, Integer.class);
+            
+            ArrayList <Role> roles = (ArrayList <Role>) dao.findAll();
             for(Role role: roles){
                 jComboBox1.addItem(role);
             }

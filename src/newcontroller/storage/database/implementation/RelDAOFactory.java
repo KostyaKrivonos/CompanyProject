@@ -37,7 +37,7 @@ public class RelDAOFactory extends DAOFactory{
         Properties properties = new Properties();
         //InputStream is = getClass().getResourceAsStream("/resources/dbconfig.properties");
         try {
-            InputStream is = new BufferedInputStream(new FileInputStream("/resources/dbconfig.properties"));
+            InputStream is = new BufferedInputStream(new FileInputStream("C:\\Users\\Алёшечка\\Documents\\NetBeansProjects\\CompanyProject\\src\\resources\\dbconfig.properties"));
             properties.load(is);
             String url = properties.getProperty("url");
             String user = properties.getProperty("user");

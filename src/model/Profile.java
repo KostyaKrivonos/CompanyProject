@@ -17,6 +17,9 @@ public class Profile {
     private String password;
     private Role role;
 
+    public Profile() {
+    }
+
     public Profile(int id, String name, String lastName, String nickName, String password, int idRole, String role) {
         this.id = id;
         this.name = name;
